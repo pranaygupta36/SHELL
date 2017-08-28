@@ -20,22 +20,24 @@ void getPrompt() {
 	int homelen = strlen(home);
 	currdir[currlen++] = 47; 
 	gethostname(hostname,20);
-	int flag = 0;
-	for(i=0;i<homelen;i++) {
-		if(currdir[i] != home[i]) {
-			flag = 1;
-	//		printf("%s currdir ",currdir);
-	//		printf("%s home = ",home);
+	if (currlen >= homelen) {
+		int flag = 0;
+		for(i=0;i<homelen;i++) {
+			if(currdir[i] != home[i]) {
+				flag = 1;
+		//		printf("%s currdir ",currdir);
+		//		printf("%s home = ",home);
+			}
 		}
-	}
-	int j = 0;
-	if (flag == 0) {
-		currdir[j++] = '~';
-		currdir[j++] = '/';
-	//	printf("%d",currlen);
-		for(i=homelen;i<currlen;i++) currdir[j++] = currdir[i];
-		while(j<currlen) currdir[j++] = 0;
-	}
+		int j = 0;
+		if (flag == 0) {
+			currdir[j++] = '~';
+			currdir[j++] = '/';
+		//	printf("%d",currlen);
+			for(i=homelen;i<currlen;i++) currdir[j++] = currdir[i];
+			while(j<currlen) currdir[j++] = 0;
+		}
+	}	
 	printf("<%s@%s:%s>",username,hostname,currdir);
 }
 
