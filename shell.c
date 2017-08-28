@@ -6,9 +6,10 @@
 #include<sys/wait.h>
 #include<string.h>
 
-#define home "/home/pranay/College/sem21/OS/assignment2/"
-#define homelen 42
-
+char home[100];
+void getHome() {
+	getcwd(home,100);
+}
 void getPrompt() {
 	char *username = getenv("USERNAME");
 	char *hostname = malloc(20*sizeof(char));
@@ -16,6 +17,7 @@ void getPrompt() {
 	int i;
 	getcwd(currdir,100);
 	int currlen = strlen(currdir);
+	int homelen = strlen(home);
 	currdir[currlen++] = 47; 
 	gethostname(hostname,20);
 	int flag = 0;
@@ -40,6 +42,8 @@ void getPrompt() {
 int main() {
 	int i;
 	for(i=0;i<10;i++) {
+		getHome();
+		home[strlen(home)] = 47;
 		getPrompt();
 		char *s = malloc(100*sizeof(char));
 		scanf("%s",s);
