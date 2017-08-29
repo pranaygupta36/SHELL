@@ -112,16 +112,17 @@ int executeCmds(char **args) {
 	if (args[0] == NULL) return 1;
 	//if (strcmp(args[0],"cd") == 0) return cd(args);
 	else if (strcmp(args[0],"pwd") == 0) return pwd();
-	else if (strcmp(args[0],"exit") == 0) return 0;
+	else if (strcmp(args[0],"exit") == 0) exit(0);
 	//else if (strcmp(args[0],"echo") == 0) return cd(args);
 	else return launchCmds(args);
 }
 
 int main() {
-	int i,status;
+	int i,status = 1;
 	getHome();
 	home[strlen(home)] = 47;
 	do {
+		//rintf("\n");
 		getPrompt();
 		char *line = readInput();
 		char *temp;
@@ -131,7 +132,7 @@ int main() {
 			char **args = separateCmds(temp);
 			//printf("2\n");
 			int status = executeCmds(args);
-			//printf("3\n");
+			//printf("\n");
 			if (status == 0 ) break; 
 			
 		}
