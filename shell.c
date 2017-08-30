@@ -37,7 +37,9 @@ void getPrompt() {
 			while(j<currlen) currdir[j++] = 0;
 		}
 	}	
-	printf("<%s@%s:%s>",username,hostname,currdir);
+	printf("<%s@%s:%s> ",username,hostname,currdir);
+	free(hostname);
+	free(currdir);
 }
 
 char *readInput(void) {
@@ -60,7 +62,7 @@ char *readInput(void) {
 			//error handling
 		} 
 	}
-
+	free(line);
 }
 
 char **separateCmds(char *line) {
@@ -84,6 +86,7 @@ char **separateCmds(char *line) {
 	tokens[position] = NULL;
 	//printf("%s",tokens[0]);
 	return tokens;
+	free(tokens);
 }
 
 int launchCmds(char **args) {
@@ -106,14 +109,37 @@ int pwd(void) {
 	char *currdir = malloc(1000*sizeof(char));
 	getcwd(currdir,1000);
 	printf("%s\n",currdir);
+	free(currdir);
 }
+
+int echo(char **args) {
+	int i=1;
+	while (args[i] != NULL) printf("%s ",args[i++]);
+	printf("\n");
+	return 1;
+}
+
+int cd(char **args) {
+	//printf("%s\n",home);
+	if (args[1] == NULL) chdir(home);
+	else {
+		if (strcmp(args[1],"~") == 0) { 
+			if (chdir(home) != 0) perror("shell");
+		}	
+		else {
+			if(chdir(args[1]) != 0) perror("shell");		
+		}
+	}
+	return 1;
+}	
 
 int executeCmds(char **args) {
 	if (args[0] == NULL) return 1;
 	//if (strcmp(args[0],"cd") == 0) return cd(args);
 	else if (strcmp(args[0],"pwd") == 0) return pwd();
 	else if (strcmp(args[0],"exit") == 0) exit(0);
-	//else if (strcmp(args[0],"echo") == 0) return cd(args);
+	else if (strcmp(args[0],"echo") == 0) return echo(args);
+	else if (strcmp(args[0],"cd") == 0) return cd(args);
 	else return launchCmds(args);
 }
 
@@ -125,6 +151,7 @@ int main() {
 		//rintf("\n");
 		getPrompt();
 		char *line = readInput();
+
 		char *temp;
 		//printf("1\n");
 		while (line) {
