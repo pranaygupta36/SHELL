@@ -1,13 +1,3 @@
-<<<<<<< HEAD
-#include <stdio.h>
-#include <sys/types.h>
-#include <pwd.h>
-#include <unistd.h>
-#include <stdlib.h>
-#include <sys/wait.h>
-#include <string.h>
-
-=======
 #include<stdio.h>
 #include<sys/types.h>
 #include<pwd.h>
@@ -19,7 +9,7 @@
 #include<dirent.h>
 #include<time.h>
 #include<grp.h>
->>>>>>> ead21988b85c6b3d420754bb7f8d86286bf74f7c
+
 
 #define Delim " \t\n\r\a"  
 
@@ -150,7 +140,6 @@ int cd(char **args) {
 	return 1;
 }	
 
-<<<<<<< HEAD
 int pinfo(char **args,char *path)
 {
 	char ProcessPath[1000];
